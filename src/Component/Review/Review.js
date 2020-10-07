@@ -3,13 +3,18 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import fakeData from '../../fakeData';
-import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import Cart from '../Cart/Cart';
 import ReviewItem from '../ReviewItem/ReviewItem';
 
 
 const Review = () => {
     const [cart, setCart] = useState([])
+
+    const handlePlaceOrder = () => {
+        setCart([]);
+        processOrder();
+    }
 
 
     const removeProduct = (productKey) => {
@@ -45,8 +50,8 @@ const Review = () => {
            </div>
            <div className="cart-container">
                <Cart cart={cart}>
-               <Link to="/">
-                    <button className="main-btn">Place Order</button>
+                <Link to='/address'>
+                    <button onClick={handlePlaceOrder} className="main-btn">Place Order</button>
                 </Link>
                </Cart>
 

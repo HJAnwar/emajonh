@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import Header from './Component/Header/Header';
 import Shope from './Component/Shope/Shope';
 import {
@@ -12,13 +12,18 @@ import Review from './Component/Review/Review';
 import Inventory from './Component/Inventory/Inventory';
 import Login from './Login/Login';
 import ProductDetail from './Component/ProductDetail/ProductDetail';
+import Address from './Component/Address/Address';
+import PrivateRoute from './Component/PrivateRoute/PrivateRoute';
 
+export const UserContext= createContext();
 
 function App() {
+
+  const [loggedInUser, setLoggedInUser]=useState({});
   return (
     <div>
       
-      
+      <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
         <Header></Header>
         <Switch>
@@ -31,6 +36,9 @@ function App() {
           <Route  path ='/login'>
             <Login></Login>
           </Route>
+          <PrivateRoute  path ='/address'>
+            <Address></Address>
+          </PrivateRoute>
           <Route  path ='/product/:productKey'>
             <ProductDetail></ProductDetail>
           </Route>
@@ -45,6 +53,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      </UserContext.Provider>
     </div>
   );
 }
